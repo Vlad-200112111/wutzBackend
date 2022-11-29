@@ -6,4 +6,5 @@ psycopg2
 Pillow
 requests
 djoser
+mysqlclient
 django-rest-swagger

@@ -29,7 +29,5 @@ urlpatterns = [
         name="schema-swagger-ui",
     ),
     path("api/v1/", include("accounts.urls")),
-    path("api/v1/", include("djoser.urls")),
-    path("api/v1/", include("djoser.urls.jwt")),
 
 ]

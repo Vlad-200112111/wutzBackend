@@ -1,4 +1,3 @@
-from djoser.serializers import UserCreateSerializer
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
@@ -7,8 +6,8 @@ from .models import Phones, News, ElementsSlider, WorkPrograms, MainInfo, Catego
 User = get_user_model()
 
 
-class ProfilesSerializer(UserCreateSerializer):
-    class Meta(UserCreateSerializer.Meta):
+class ProfilesSerializer(serializers.ModelSerializer):
+    class Meta:
         model = User
         fields = ("id", "email", "username", "first_name", "last_name", "password")
 

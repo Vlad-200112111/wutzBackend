@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -88,6 +87,7 @@ class NewsListLimitAPIView(generics.ListAPIView):
         queryset = queryset.all()[:int(self.request.query_params.get('limit'))]
         return queryset
 
+
 class NewsCreateApiView(generics.CreateAPIView):
     serializer_class = NewsSerializer
     permission_classes = (IsAuthenticated,)
@@ -95,6 +95,7 @@ class NewsCreateApiView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         request.data['profile'] = request.user.id
         return super(NewsCreateApiView, self).create(request, *args, **kwargs)
+
 
 class NewsByIdApiView(generics.RetrieveUpdateDestroyAPIView):
     queryset = News.objects.all()
@@ -164,9 +165,13 @@ class MainInfoCreateApiView(generics.CreateAPIView):
 class MainInfoByIdApiView(generics.RetrieveUpdateDestroyAPIView):
     queryset = MainInfo.objects.all()
     serializer_class = MainInfoSerializer
-    lookup_field = 'id'
     permission_classes = (IsAuthenticated,)
     authentication_classes = [JWTAuthentication]
+
+    def put(self, request, *args, **kwargs):
+        self.request.POST._mutable = True
+        request.data['profile'] = request.user.id
+        return self.update(request, *args, **kwargs)
 
 
 class CategoriesForPagesListApiView(generics.ListAPIView):

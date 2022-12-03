@@ -5,3 +5,4 @@ drf-yasg
 Pillow
 requests
 mysqlclient
+djangorestframework-simplejwt

@@ -88,11 +88,11 @@ class Profiles(AbstractBaseUser, PermissionsMixin):
 
 class News(models.Model):
     name = models.CharField(max_length=100)
-    caption = models.CharField(max_length=500)
+    caption = models.CharField(max_length=1000)
     url_image = models.ImageField(upload_to="news/%Y-%m-%d/")
     profile = models.ForeignKey(Profiles, on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now=True)
-    html = models.TextField(max_length=1000, blank=True)
+    html = models.TextField(max_length=10000, blank=True)
 
     def __str__(self):
         return self.name
@@ -119,7 +119,7 @@ class WorkPrograms(models.Model):
 
 class MainInfo(models.Model):
     name = models.CharField(max_length=100)
-    html = models.TextField(max_length=1000, blank=True)
+    html = models.TextField(max_length=10000, blank=True)
     profile = models.ForeignKey(Profiles, on_delete=models.CASCADE)
     updated = models.DateTimeField(auto_now=True)
 
@@ -138,7 +138,7 @@ class CategoriesForPages(models.Model):
 class Pages(models.Model):
     name = models.CharField(max_length=100)
     caption = models.CharField(max_length=500)
-    html = models.TextField(max_length=1000, blank=True)
+    html = models.TextField(max_length=10000, blank=True)
     profile = models.ForeignKey(Profiles, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(CategoriesForPages, on_delete=models.CASCADE)

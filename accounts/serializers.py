@@ -18,43 +18,43 @@ class PositionsSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class PhonesSerializer(serializers.Serializer):
+class PhonesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Phones
         fields = "__all__"
 
 
-class NewsSerializer(serializers.Serializer):
+class NewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = News
         fields = "__all__"
 
 
-class ElementsSliderSerializer(serializers.Serializer):
+class ElementsSliderSerializer(serializers.ModelSerializer):
     class Meta:
         model = ElementsSlider
         fields = "__all__"
 
 
-class WorkProgramsSerializer(serializers.Serializer):
+class WorkProgramsSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkPrograms
         fields = "__all__"
 
 
-class MainInfoSerializer(serializers.Serializer):
+class MainInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = MainInfo
         fields = "__all__"
 
 
-class CategoriesForPagesSerializer(serializers.Serializer):
+class CategoriesForPagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoriesForPages
         fields = "__all__"
 
 
-class PagesSerializer(serializers.Serializer):
+class PagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pages
         fields = "__all__"

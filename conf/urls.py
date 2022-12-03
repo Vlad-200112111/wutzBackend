@@ -3,6 +3,8 @@
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include, re_path
+from django.conf.urls.static import static
+from django.conf import settings
 
 # DRF YASG
 from rest_framework import permissions
@@ -21,6 +23,7 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     re_path(
@@ -31,3 +34,5 @@ urlpatterns = [
     path("api/v1/", include("accounts.urls")),
 
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

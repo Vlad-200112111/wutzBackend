@@ -20,6 +20,7 @@ urlpatterns = [
     path('phone/<int:id>', PhonesByIdApiView.as_view()),
     path('news/', NewsListApiView.as_view()),
     path('news/create/', NewsCreateApiView.as_view()),
+    path('news/limit/', NewsListLimitAPIView.as_view()),
     path('news/<int:id>', NewsByIdApiView.as_view()),
     path('elements-slider/', ElementsSliderListApiView.as_view()),
     path('elements-slider/create/', ElementsSliderCreateApiView.as_view()),

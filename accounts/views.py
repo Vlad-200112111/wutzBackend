@@ -80,13 +80,22 @@ class NewsListApiView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     authentication_classes = [JWTAuthentication]
 
-
-class NewsCreateApiView(generics.CreateAPIView):
-    queryset = News.objects.all()
+class NewsListLimitAPIView(generics.ListAPIView):
     serializer_class = NewsSerializer
     permission_classes = (IsAuthenticated,)
-    authentication_classes = [JWTAuthentication]
 
+    def get_queryset(self):
+        queryset = News.objects.all()
+        queryset = queryset.all()[:int(self.request.query_params.get('limit'))]
+        return queryset
+
+class NewsCreateApiView(generics.CreateAPIView):
+    serializer_class = NewsSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def create(self, request, *args, **kwargs):
+        request.data['profile'] = request.user.id
+        return super(NewsCreateApiView, self).create(request, *args, **kwargs)
 
 class NewsByIdApiView(generics.RetrieveUpdateDestroyAPIView):
     queryset = News.objects.all()

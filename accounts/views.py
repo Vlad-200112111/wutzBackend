@@ -191,7 +191,6 @@ class CategoriesForPagesCreateApiView(generics.CreateAPIView):
 class CategoriesForPagesByIdApiView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CategoriesForPages.objects.all()
     serializer_class = CategoriesForPagesSerializer
-    lookup_field = 'id'
     permission_classes = (IsAuthenticated,)
     authentication_classes = [JWTAuthentication]
 
@@ -204,10 +203,13 @@ class PagesListApiView(generics.ListAPIView):
 
 
 class PagesCreateApiView(generics.CreateAPIView):
-    queryset = Pages.objects.all()
     serializer_class = PagesSerializer
     permission_classes = (IsAuthenticated,)
-    authentication_classes = [JWTAuthentication]
+
+    def create(self, request, *args, **kwargs):
+        self.request.POST._mutable = True
+        request.data['profile'] = request.user.id
+        return super(PagesCreateApiView, self).create(request, *args, **kwargs)
 
 
 class PagesByIdApiView(generics.RetrieveUpdateDestroyAPIView):

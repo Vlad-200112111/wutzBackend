@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from rest_framework import generics
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from .models import Profiles, Positions, Phones, News, MainInfo, CategoriesForPages, Pages, ElementsSlider, WorkPrograms
-from .serializers import ProfilesSerializer, PositionsSerializer, PhonesSerializer, NewsSerializer, PagesSerializer, \
-    ElementsSliderSerializer, WorkProgramsSerializer, MainInfoSerializer, CategoriesForPagesSerializer
+from .models import *
+from .serializers import *
 
 
 class ProfilesListApiView(generics.ListAPIView):
@@ -77,12 +76,12 @@ class PhonesByIdApiView(generics.RetrieveUpdateDestroyAPIView):
 class NewsListApiView(generics.ListAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializer
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = [JWTAuthentication]
+    permission_classes = (AllowAny,)
+
 
 class NewsListLimitAPIView(generics.ListAPIView):
     serializer_class = NewsSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def get_queryset(self):
         queryset = News.objects.all()
@@ -100,7 +99,6 @@ class NewsCreateApiView(generics.CreateAPIView):
 class NewsByIdApiView(generics.RetrieveUpdateDestroyAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializer
-    lookup_field = 'id'
     permission_classes = (IsAuthenticated,)
     authentication_classes = [JWTAuthentication]
 

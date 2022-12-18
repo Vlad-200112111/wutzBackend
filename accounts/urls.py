@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework_simplejwt.views import (TokenObtainPairView,
                                             TokenRefreshView,
-                                            TokenVerifyView)
+                                            TokenVerifyView, TokenBlacklistView)
 
 from .views import *
 
@@ -9,6 +9,7 @@ urlpatterns = [
     path('token/create/', TokenObtainPairView.as_view()),
     path('token/refresh/', TokenRefreshView.as_view()),
     path('token/verify/', TokenVerifyView.as_view()),
+    path('logout/', TokenBlacklistView.as_view()),
     path('profile/', ProfilesListApiView.as_view()),
     path('profile/create/', ProfilesCreateAPIView.as_view()),
     path('profile/<int:pk>', ProfilesByIdAPIView.as_view()),
@@ -37,4 +38,5 @@ urlpatterns = [
     path('page/', PagesListApiView.as_view()),
     path('page/create/', PagesCreateApiView.as_view()),
     path('page/<int:pk>', PagesByIdApiView.as_view()),
+    path('categories-and-pages/', CategoriesAndPagesListApiView.as_view()),
 ]

@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .models import Phones, News, ElementsSlider, WorkPrograms, MainInfo, CategoriesForPages, Pages, Positions
+from .models import *
 
 User = get_user_model()
 
@@ -57,4 +57,16 @@ class CategoriesForPagesSerializer(serializers.ModelSerializer):
 class PagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pages
+        fields = "__all__"
+
+
+class MaterialsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Materials
+        fields = "__all__"
+
+class CategoriesAndPagesSerializer(serializers.ModelSerializer):
+    pages = PagesSerializer(source='pages_set', many=True)
+    class Meta:
+        model = CategoriesForPages
         fields = "__all__"

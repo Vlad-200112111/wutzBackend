@@ -1,10 +1,22 @@
 from functools import partial
 from rest_framework import generics
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import *
 from .serializers import *
 from .permissions import *
+
+
+class GetRole(generics.GenericAPIView):
+    roles = {1: 'ADMIN', 2: 'STUDENT', 3: 'TEACHER', 4: 'EMPLOYEE'}
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return Response({"results": "Unauthorized"}, status=401)
+        else:
+            role = Profiles.objects.get(id=request.user.id).role
+            return Response({"results": self.roles[role]}, status=200)
 
 
 class ProfilesListApiView(generics.ListCreateAPIView):

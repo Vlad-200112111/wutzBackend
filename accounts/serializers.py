@@ -12,9 +12,9 @@ class ProfilesSerializer(serializers.ModelSerializer):
         fields = ("id", "email", "username", "first_name", "last_name", "password")
 
 
-class PositionsSerializer(serializers.ModelSerializer):
+class PlatoonsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Positions
+        model = Platoons
         fields = "__all__"
 
 

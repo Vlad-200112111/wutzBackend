@@ -27,9 +27,8 @@ class CustomUserManager(BaseUserManager):
         return user
 
 
-class Positions(models.Model):
+class Platoons(models.Model):
     name = models.CharField(max_length=100)
-    caption = models.CharField(max_length=500)
 
     def __str__(self):
         return self.name
@@ -44,13 +43,15 @@ class Phones(models.Model):
 
 class Profiles(AbstractBaseUser, PermissionsMixin):
     ADMIN = 1
-    CADET = 2
+    STUDENT = 2
     TEACHER = 3
+    EMPLOYEE = 4
 
     ROLE_CHOICES = (
         (ADMIN, 'Admin'),
-        (CADET, 'Cadet'),
+        (STUDENT, 'Student'),
         (TEACHER, 'Teacher'),
+        (EMPLOYEE, 'Employee'),
     )
     email = models.EmailField(max_length=255, unique=True)
     username = models.CharField(max_length=255, unique=True)
@@ -58,7 +59,7 @@ class Profiles(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=255)
     patronymic = models.CharField(max_length=255, null=True)
     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, blank=True, null=True)
-    position = models.ForeignKey(Positions, on_delete=models.CASCADE, null=True)
+    platoon = models.ForeignKey(Platoons, on_delete=models.CASCADE, null=True)
     url_image = models.ImageField(upload_to="profile/%Y-%m-%d/", null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

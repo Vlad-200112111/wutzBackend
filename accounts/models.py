@@ -163,3 +163,7 @@ class Materials(models.Model):
 
     def __str__(self):
         return self.name
+
+# class Url(models.Model):
+
+

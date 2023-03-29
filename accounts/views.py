@@ -93,7 +93,7 @@ class ElementsSliderByIdApiView(generics.RetrieveUpdateDestroyAPIView):
 class CategoriesForPagesListApiView(generics.ListCreateAPIView):
     queryset = CategoriesForPage.objects.all()
     serializer_class = CategoriesForPagesSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsEmployee,)
 
 
 class CategoriesForPagesByIdApiView(generics.RetrieveUpdateDestroyAPIView):
@@ -105,23 +105,18 @@ class CategoriesForPagesByIdApiView(generics.RetrieveUpdateDestroyAPIView):
 class PagesListApiView(generics.ListCreateAPIView):
     queryset = Page.objects.all()
     serializer_class = PagesSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsEmployee,)
+
+    def create(self, request, *args, **kwargs):
+        self.request.POST._mutable = True
+        request.data['profile'] = request.user.id
+        return super(PagesListApiView, self).create(request, *args, **kwargs)
 
 
 class CategoriesAndPagesListApiView(generics.ListCreateAPIView):
     queryset = CategoriesForPage.objects.select_related()
     serializer_class = CategoriesAndPagesSerializer
     permission_classes = (IsAuthenticated,)
-
-
-class PagesCreateApiView(generics.CreateAPIView):
-    serializer_class = PagesSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def create(self, request, *args, **kwargs):
-        self.request.POST._mutable = True
-        request.data['profile'] = request.user.id
-        return super(PagesCreateApiView, self).create(request, *args, **kwargs)
 
 
 class PagesByIdApiView(generics.RetrieveUpdateDestroyAPIView):

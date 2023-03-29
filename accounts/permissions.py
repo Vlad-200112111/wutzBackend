@@ -11,8 +11,8 @@ class IsAdmin(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.user.is_anonymous:
             return False
-        return bool(Profiles.objects.all().filter(id=request.user.id)[
-                        0].role == Profiles.ADMIN and request.method in self.allowed_methods)
+        return bool(Profile.objects.all().filter(id=request.user.id)[
+                        0].role == Profile.ADMIN and request.method in self.allowed_methods)
 
 
 class IsEmployee(permissions.BasePermission):
@@ -24,8 +24,8 @@ class IsEmployee(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.user.is_anonymous:
             return False
-        return bool(Profiles.objects.all().filter(id=request.user.id)[
-                        0].role == Profiles.EMPLOYEE and request.method in self.allowed_methods)
+        return bool(Profile.objects.all().filter(id=request.user.id)[
+                        0].role == Profile.EMPLOYEE and request.method in self.allowed_methods)
 
 
 class IsStudent(permissions.BasePermission):
@@ -37,8 +37,8 @@ class IsStudent(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.user.is_anonymous:
             return False
-        return bool(Profiles.objects.all().filter(id=request.user.id)[
-                        0].role == Profiles.STUDENT and request.method in self.allowed_methods)
+        return bool(Profile.objects.all().filter(id=request.user.id)[
+                        0].role == Profile.STUDENT and request.method in self.allowed_methods)
 
 
 class IsTeacher(permissions.BasePermission):
@@ -50,5 +50,5 @@ class IsTeacher(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.user.is_anonymous:
             return False
-        return bool(Profiles.objects.all().filter(id=request.user.id)[
-                        0].role == Profiles.TEACHER and request.method in self.allowed_methods)
+        return bool(Profile.objects.all().filter(id=request.user.id)[
+                        0].role == Profile.TEACHER and request.method in self.allowed_methods)

@@ -11,55 +11,43 @@ from .permissions import *
 
 class GetRole(generics.GenericAPIView):
     roles = {1: 'ADMIN', 2: 'STUDENT', 3: 'TEACHER', 4: 'EMPLOYEE'}
+
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return Response({"results": "Unauthorized"}, status=401)
         else:
-            role = Profiles.objects.get(id=request.user.id).role
+            role = Profile.objects.get(id=request.user.id).role
             return Response({"results": self.roles[role]}, status=200)
 
 
 class ProfilesListApiView(generics.ListCreateAPIView):
-    queryset = Profiles.objects.all()
+    queryset = Profile.objects.all()
     serializer_class = ProfilesSerializer
     permission_classes = (partial(IsAdmin, ['GET', 'HEAD']),)
 
 
 class ProfilesByIdAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Profiles.objects.all()
+    queryset = Profile.objects.all()
     serializer_class = ProfilesSerializer
     lookup_field = 'id'
     permission_classes = (IsAuthenticated,)
 
 
-class PositionsListApiView(generics.ListCreateAPIView):
-    queryset = Platoons.objects.all()
+class PlatoonsListApiView(generics.ListCreateAPIView):
+    queryset = Platoon.objects.all()
     serializer_class = PlatoonsSerializer
     permission_classes = (IsAuthenticated,)
 
 
-class PositionsByIdAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Platoons.objects.all()
+class PlatoonsByIdAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Platoon.objects.all()
     serializer_class = PlatoonsSerializer
-    lookup_field = 'id'
-    permission_classes = (IsAuthenticated,)
-
-
-class PhonesListApiView(generics.ListCreateAPIView):
-    queryset = Phones.objects.all()
-    serializer_class = PhonesSerializer
-    permission_classes = (IsAuthenticated,)
-
-
-class PhonesByIdApiView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Phones.objects.all()
-    serializer_class = PhonesSerializer
     lookup_field = 'id'
     permission_classes = (IsAuthenticated,)
 
 
 class NewsListApiView(generics.ListCreateAPIView):
-    queryset = News.objects.all()
+    queryset = New.objects.all()
     serializer_class = NewsSerializer
     permission_classes = (AllowAny,)
 
@@ -69,7 +57,7 @@ class NewsListLimitAPIView(generics.ListAPIView):
     permission_classes = (AllowAny,)
 
     def get_queryset(self):
-        queryset = News.objects.all()
+        queryset = New.objects.all()
         queryset = queryset.all()[:int(self.request.query_params.get('limit'))]
         return queryset
 
@@ -84,7 +72,7 @@ class NewsCreateApiView(generics.CreateAPIView):
 
 
 class NewsByIdApiView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = News.objects.all()
+    queryset = New.objects.all()
     serializer_class = NewsSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -102,56 +90,26 @@ class ElementsSliderByIdApiView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
 
 
-class WorkProgramsListApiView(generics.ListCreateAPIView):
-    queryset = WorkPrograms.objects.all()
-    serializer_class = WorkProgramsSerializer
-    permission_classes = (IsAuthenticated,)
-
-
-class WorkProgramsByIdApiView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = WorkPrograms.objects.all()
-    serializer_class = WorkProgramsSerializer
-    lookup_field = 'id'
-    permission_classes = (IsAuthenticated,)
-
-
-class MainInfoListApiView(generics.ListCreateAPIView):
-    queryset = MainInfo.objects.all()
-    serializer_class = MainInfoSerializer
-    permission_classes = (IsAuthenticated,)
-
-
-class MainInfoByIdApiView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = MainInfo.objects.all()
-    serializer_class = MainInfoSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def put(self, request, *args, **kwargs):
-        self.request.POST._mutable = True
-        request.data['profile'] = request.user.id
-        return self.update(request, *args, **kwargs)
-
-
 class CategoriesForPagesListApiView(generics.ListCreateAPIView):
-    queryset = CategoriesForPages.objects.all()
+    queryset = CategoriesForPage.objects.all()
     serializer_class = CategoriesForPagesSerializer
     permission_classes = (IsAuthenticated,)
 
 
 class CategoriesForPagesByIdApiView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = CategoriesForPages.objects.all()
+    queryset = CategoriesForPage.objects.all()
     serializer_class = CategoriesForPagesSerializer
     permission_classes = (IsAuthenticated,)
 
 
 class PagesListApiView(generics.ListCreateAPIView):
-    queryset = Pages.objects.all()
+    queryset = Page.objects.all()
     serializer_class = PagesSerializer
     permission_classes = (IsAuthenticated,)
 
 
 class CategoriesAndPagesListApiView(generics.ListCreateAPIView):
-    queryset = CategoriesForPages.objects.select_related()
+    queryset = CategoriesForPage.objects.select_related()
     serializer_class = CategoriesAndPagesSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -167,7 +125,7 @@ class PagesCreateApiView(generics.CreateAPIView):
 
 
 class PagesByIdApiView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Pages.objects.all()
+    queryset = Page.objects.all()
     serializer_class = PagesSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -177,25 +135,25 @@ class PagesByIdApiView(generics.RetrieveUpdateDestroyAPIView):
         return self.update(request, *args, **kwargs)
 
 
-class MaterialsListApiView(generics.ListCreateAPIView):
-    queryset = Materials.objects.all()
-    serializer_class = MaterialsSerializer
+class MaterialsDistanceEducationsListApiView(generics.ListCreateAPIView):
+    queryset = MaterialsDistanceEducation.objects.all()
+    serializer_class = MaterialsDistanceEducationsSerializer
     permission_classes = (IsAuthenticated,)
 
 
-class MaterialsCreateApiView(generics.CreateAPIView):
-    serializer_class = MaterialsSerializer
+class MaterialsDistanceEducationsCreateApiView(generics.CreateAPIView):
+    serializer_class = MaterialsDistanceEducationsSerializer
     permission_classes = (IsAuthenticated,)
 
     def create(self, request, *args, **kwargs):
         self.request.POST._mutable = True
         request.data['profile'] = request.user.id
-        return super(MaterialsCreateApiView, self).create(request, *args, **kwargs)
+        return super(MaterialsDistanceEducationsCreateApiView, self).create(request, *args, **kwargs)
 
 
 class MaterialsByIdApiView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Materials.objects.all()
-    serializer_class = MaterialsSerializer
+    queryset = MaterialsDistanceEducation.objects.all()
+    serializer_class = MaterialsDistanceEducationsSerializer
     permission_classes = (AllowAny,)
 
     def put(self, request, *args, **kwargs):

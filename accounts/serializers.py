@@ -14,19 +14,13 @@ class ProfilesSerializer(serializers.ModelSerializer):
 
 class PlatoonsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Platoons
-        fields = "__all__"
-
-
-class PhonesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Phones
+        model = Platoon
         fields = "__all__"
 
 
 class NewsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = News
+        model = New
         fields = "__all__"
 
 
@@ -36,37 +30,33 @@ class ElementsSliderSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class WorkProgramsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = WorkPrograms
-        fields = "__all__"
-
-
-class MainInfoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MainInfo
-        fields = "__all__"
-
-
 class CategoriesForPagesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CategoriesForPages
+        model = CategoriesForPage
         fields = "__all__"
 
 
 class PagesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Pages
+        model = Page
         fields = "__all__"
 
 
-class MaterialsSerializer(serializers.ModelSerializer):
+class MaterialsDistanceEducationsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Materials
+        model = MaterialsDistanceEducation
         fields = "__all__"
+
+
+class PlatoonsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Platoon
+        fields = "__all__"
+
 
 class CategoriesAndPagesSerializer(serializers.ModelSerializer):
     pages = PagesSerializer(source='pages_set', many=True)
+
     class Meta:
-        model = CategoriesForPages
+        model = CategoriesForPage
         fields = "__all__"
